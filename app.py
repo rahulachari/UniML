@@ -1,6 +1,7 @@
 import os
 import re
 import sqlite3
+import shutil
 import cv2
 import pytesseract
 import joblib
@@ -54,7 +55,11 @@ UPLOAD_FOLDER = "static/uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# -------------------- TESSERACT PATH (cross-platform) --------------------
+
+tesseract_path = shutil.which("tesseract")
+if tesseract_path:
+    pytesseract.pytesseract.tesseract_cmd = tesseract_path
 
 # -------------------- LOAD MODEL --------------------
 
@@ -199,6 +204,7 @@ def process_education():
     result = analyze_resume(text, domain)
 
     return render_template('education_result.html', data=result)
+
 # -------------------- LOAN --------------------
 
 @app.route("/loan")
@@ -426,7 +432,9 @@ def predict():
         suggested_steps=generate_medical_suggestions(prediction),
         extracted_text=text
     )
+
 # -------------------- MAIN --------------------
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)

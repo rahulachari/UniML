@@ -1,0 +1,9 @@
+﻿{
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "apt-get install -y tesseract-ocr && pip install -r requirements.txt && python train_model.py"
+  },
+  "deploy": {
+    "startCommand": "python app.py"
+  }
+}
