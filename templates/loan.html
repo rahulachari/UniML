@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Application</title>
+
+    <style>
+        .nav-buttons {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 999;
+}
+
+.nav-buttons button {
+    margin-left: 8px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #1abc9c;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-buttons button:hover {
+    background: #16a085;
+}
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1f3c4d, #274c5e);
+            color: white;
+        }
+
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<div class="nav-buttons">
+    <button onclick="goBack()">⬅ Back</button>
+    <a href="/dashboard"><button>🏠 Home</button></a>
+</div>
+<div class="container">
+
+    <h2>🏦 Loan Application</h2>
+
+    <form action="/process_loan" method="post">
+
+        <!-- Loan Type -->
+        <label>Loan Type</label>
+        <select name="loan_type">
+            <option value="home">Home Loan</option>
+            <option value="personal">Personal Loan</option>
+            <option value="education">Education Loan</option>
+        </select>
+
+        <!-- Inputs -->
+        <input type="number" name="income" placeholder="Monthly Income" required>
+        <input type="number" name="emi" placeholder="Existing EMI" required>
+        <input type="number" name="loan_amount" placeholder="Requested Loan Amount" required>
+
+        <select name="employment">
+            <option value="salaried">Salaried</option>
+            <option value="self">Self Employed</option>
+        </select>
+
+        <button type="submit">Analyze Loan</button>
+
+    </form>
+
+</div>
+
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+</html>

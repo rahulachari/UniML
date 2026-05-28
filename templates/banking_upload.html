@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banking Module</title>
+
+    <style>
+.nav-buttons {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 999;
+}
+
+.nav-buttons button {
+    margin-left: 8px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #1abc9c;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-buttons button:hover {
+    background: #16a085;
+}
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1f3c4d, #274c5e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            width: 400px;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ccc;
+        }
+
+        .back:hover {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🏦 Upload Bank Statement</h2>
+
+    <form action="/process_banking" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <br>
+        <button type="submit">Upload</button>
+    </form>
+
+    <a href="/dashboard" class="back">⬅ Back</a>
+</div>
+<div class="nav-buttons">
+    <button onclick="goBack()">⬅ Back</button>
+    <a href="/dashboard"><button>🏠 Home</button></a>
+</div>
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+</html>

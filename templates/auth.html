@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UniML Auth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: #f5f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 900px;
+    height: 550px;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+/* LEFT PANEL */
+.left-panel {
+    width: 50%;
+    background: linear-gradient(135deg, #43cea2, #185a9d);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+    transition: 0.6s;
+}
+
+.left-panel h1 {
+    margin-bottom: 10px;
+}
+
+.left-panel p {
+    margin-bottom: 20px;
+}
+
+.left-panel button {
+    padding: 10px 25px;
+    border-radius: 20px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+    width: 50%;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: 0.6s;
+}
+
+.form-box {
+    display: none;
+}
+
+.form-box.active {
+    display: block;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+button.submit-btn {
+    margin-top: 15px;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(45deg, #43cea2, #185a9d);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* SWITCH MODE */
+.container.signup-mode .left-panel {
+    transform: translateX(100%);
+}
+
+.container.signup-mode .right-panel {
+    transform: translateX(-100%);
+}
+
+/* Smooth fade */
+.form-box {
+    animation: fade 0.5s ease;
+}
+
+@keyframes fade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="container">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+        <h1 id="panel-title">Welcome Back!</h1>
+        <p id="panel-text">To keep connected, please login</p>
+        <button onclick="toggleMode()">Sign In</button>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+
+        <!-- LOGIN -->
+        <div class="form-box active" id="loginBox">
+            <h2>Login</h2>
+            <form action="/login" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button class="submit-btn">Login</button>
+            </form>
+        </div>
+
+        <!-- SIGNUP -->
+        <div class="form-box" id="signupBox">
+            <h2>Create Account</h2>
+            <form action="/signup" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button class="submit-btn">Sign Up</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+let isSignup = false;
+
+function toggleMode() {
+    const container = document.getElementById("container");
+    const loginBox = document.getElementById("loginBox");
+    const signupBox = document.getElementById("signupBox");
+    const title = document.getElementById("panel-title");
+    const text = document.getElementById("panel-text");
+
+    container.classList.toggle("signup-mode");
+
+    if (!isSignup) {
+        loginBox.classList.remove("active");
+        signupBox.classList.add("active");
+
+        title.innerText = "Hello, Friend!";
+        text.innerText = "Enter your details to start your journey";
+    } else {
+        signupBox.classList.remove("active");
+        loginBox.classList.add("active");
+
+        title.innerText = "Welcome Back!";
+        text.innerText = "To keep connected, please login";
+    }
+
+    isSignup = !isSignup;
+}
+</script>
+
+</body>
+</html>

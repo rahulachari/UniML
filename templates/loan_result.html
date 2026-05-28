@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loan Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI';
+    display: flex;
+    background: #eef2f7;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #0f2f24;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    margin: 10px 0;
+    text-decoration: none;
+    color: white;
+    border-radius: 6px;
+}
+
+.sidebar a:hover {
+    background: #1abc9c;
+}
+
+/* MAIN */
+.main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.green { color: green; }
+.red { color: red; }
+.orange { color: orange; }
+
+/* SECTIONS */
+.section {
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* CHART LAYOUT */
+.chart-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.chart-container {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    height: 280px;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* BADGE */
+.badge {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.approved { background: #27ae60; color: white; }
+.rejected { background: #e74c3c; color: white; }
+.partial { background: #f39c12; color: white; }
+.nav-buttons {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 999;
+}
+
+.nav-buttons button {
+    margin-left: 8px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #1abc9c;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-buttons button:hover {
+    background: #16a085;
+}
+</style>
+</head>
+
+<body>
+<div class="nav-buttons">
+    <button onclick="goBack()">⬅ Back</button>
+    <a href="/dashboard"><button>🏠 Home</button></a>
+</div>
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>🏦 UniML</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Loan Analysis</a>
+    <a href="#">Banking</a>
+    <a href="#">Reports</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<h2>Loan Analysis Dashboard</h2>
+
+<!-- KPI CARDS -->
+<div class="cards">
+
+    <div class="card">
+        <h4>Loan Type</h4>
+        <h3>{{ loan.name }}</h3>
+    </div>
+
+    <div class="card">
+        <h4>Requested</h4>
+        <h3>₹ {{ loan_amount }}</h3>
+    </div>
+
+    <div class="card">
+        <h4>Eligible</h4>
+        <h3 class="green">₹ {{ eligible_amount }}</h3>
+    </div>
+
+    <div class="card">
+        <h4>Status</h4>
+        <span class="badge 
+        {% if decision == 'APPROVED' %}approved
+        {% elif decision == 'REJECTED' %}rejected
+        {% else %}partial{% endif %}">
+        {{ decision }}
+        </span>
+    </div>
+
+</div>
+
+<!-- CHARTS -->
+<div class="section">
+    <h3>Loan Insights</h3>
+
+    <div class="chart-row">
+
+        <div class="chart-container">
+            <canvas id="loanChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="riskChart"></canvas>
+        </div>
+
+    </div>
+</div>
+
+<!-- INSIGHTS -->
+<div class="section">
+    <h3>Insights & Suggestions</h3>
+    <ul>
+        {% for s in suggestions %}
+        <li>{{ s }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- DOCUMENTS -->
+<div class="section">
+    <h3>Required Documents</h3>
+    <ul>
+        {% for d in docs %}
+        <li>{{ d }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+</div>
+
+<script>
+    const requested = Number("{{ loan_amount }}");
+    const eligible = Number("{{ eligible_amount }}");
+    const risk = Number("{{ risk }}");
+
+    // BAR CHART
+    new Chart(document.getElementById('loanChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Requested', 'Eligible'],
+            datasets: [{
+                label: 'Loan Comparison',
+                data: [requested, eligible]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // DOUGHNUT CHART
+    new Chart(document.getElementById('riskChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Risk', 'Safe'],
+            datasets: [{
+                data: [risk, 100 - risk]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+</html>

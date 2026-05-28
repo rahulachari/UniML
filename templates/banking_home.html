@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banking Module</title>
+
+    <style>
+    .nav-buttons {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 999;
+}
+
+.nav-buttons button {
+    margin-left: 8px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #1abc9c;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-buttons button:hover {
+    background: #16a085;
+}
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1f3c4d, #274c5e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+        }
+
+        .options {
+            display: flex;
+            gap: 40px;
+        }
+
+        .card {
+            width: 250px;
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .icon {
+            font-size: 40px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<div class="nav-buttons">
+    <button onclick="goBack()">⬅ Back</button>
+    <a href="/dashboard"><button>🏠 Home</button></a>
+</div>
+<div class="container">
+
+    <h1>🏦 Banking Module</h1>
+
+    <div class="options">
+
+        <!-- Statement Analysis -->
+        <a href="/banking_upload">
+            <div class="card">
+                <div class="icon">📊</div>
+                <h2>Statement Analysis</h2>
+                <p>Upload bank statement & analyze</p>
+            </div>
+        </a>
+
+        <!-- Loan Module -->
+        <a href="/loan">
+            <div class="card">
+                <div class="icon">💰</div>
+                <h2>Loan Eligibility</h2>
+                <p>Check loan approval & documents</p>
+            </div>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+</html>
